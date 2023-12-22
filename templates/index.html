@@ -50,6 +50,8 @@
     let selection = document.getElementById("selection").value;
     let noEvent = document.getElementById("noEvent").value;
 
+    let response;
+
     const eventTypes = ["Selected", "Births", "Deaths", "Holidays", "Others"];
 
     const body = document.querySelector("body");
@@ -60,28 +62,51 @@
       let checkSelection = document.getElementById("selection").value;
       let checkNoEvent = document.getElementById("noEvent").value;
 
+      if(!checkDay || !checkMonth || !checkSelection || !checkNoEvent){
+        if(!document.getElementById("noteText")){
+          const noteText = document.createElement("h4");
+          noteText.setAttribute("id", "noteText");
+          noteText.textContent = "Enter all fields to start searching :)";
+          body.appendChild(noteText);
+        }
+        return;
+      }
+      else if(document.getElementById("noteText")) document.getElementById("noteText").remove();
+
       if(checkDay!=day || checkMonth!=month || checkSelection!=selection || checkNoEvent!=noEvent){
         if(document.querySelector("section")) document.querySelector("section").remove();
-        const loader = document.createElement("div");
-        loader.setAttribute("id", "loader");
-        body.appendChild(loader);
+        if(!document.getElementById("loader")){
+          const loader = document.createElement("div");
+          loader.setAttribute("id", "loader");
+          body.appendChild(loader);
+        }
 
-        day = checkDay; month = checkMonth; selection = checkSelection; noEvent = checkNoEvent;
-        pull();
+        if(!response){
+          day = checkDay; month = checkMonth; selection = checkSelection; noEvent = checkNoEvent;
+          response = pull();
+        }
+        else if(checkNoEvent==noEvent){
+          day = checkDay; month = checkMonth; selection = checkSelection; 
+          response = pull();
+        }
+        else{          
+          noEvent = checkNoEvent;
+          // populateEvents(response);          
+          response = pull();
+        }
       }
-
     }
 
     async function pull(){
       const request = "https://en.wikipedia.org/api/rest_v1/feed/onthisday/" + String(selection) + "/" + String(month).padStart(2,'0') + "/" + String(day).padStart(2,'0');
       // console.log(request);
       const response = await fetch(request);
-      const events = await response.json();
-      console.log(events);
-
-      populateEvents(events);
-
-      console.log("pull() Done.")
+      const events = await response.json();      
+      console.log("pull() Done.");
+      // return response.json().then((events) => {        
+        console.log(events);
+        populateEvents(events);
+      // });      
     }
 
     function populateEvents(obj){
@@ -116,6 +141,7 @@
           const ul = document.createElement("ul");
           ul.setAttribute("id", type);
           section.appendChild(ul);
+          // console.log(obj);
 
           for(let i = 0; i < noEvent && i < obj[type.toLowerCase()].length; i++){
             
