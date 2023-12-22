@@ -2,3 +2,8 @@ ul p span{
     /* font-style: italic; */
     text-decoration: underline;
 }
+
+body{
+    background-color: #181A1B;
+    color: #E8E6E3;
+}
