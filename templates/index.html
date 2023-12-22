@@ -9,12 +9,12 @@
     <h1>Wikipedia On This Day API</h1>
     <h2>Pulling interesting events happened on this day and month but in different years ago.</h2>
     <br>
-    <form onsubmit="pull(); return false;" id="form">
+    <!-- <form onsubmit="changed(); return false;" id="form"> -->
       <label for="month">Input month (as a number from 1 to 12): </label>
-      <input type="number" min="1" max="12" name="month" id="month" required>
+      <input type="number" min="1" max="12" name="month" id="month" required onchange="changed()">
       <br>
       <label for="day">Input day: </label>
-      <input type="number" min="1" max="31" name="day" id="day" required>
+      <input type="number" min="1" max="31" name="day" id="day" required onchange="changed()">
       <br>
       <br>
       <p>Provides events that historically happened on the provided day and month. Supported types of events are:</p>
@@ -27,7 +27,7 @@
         <li>Others: a list of significant events which happened on the provided day and month and which are not covered by the other types yet</li>
       </ul>
       <label for="dropdown">Filter: </label>
-      <select name="" id="selection">
+      <select name="" id="selection" onchange="changed()">
         <option value="all">All</option>
         <option value="selected">Selected</option>
         <option value="births">Births</option>
@@ -37,12 +37,11 @@
       </select>
       <br>
       <label for="noEvent">Desired number of event(s) to show:</label>
-      <input type="number" min="0" name="noEvent" id="noEvent" required>
+      <input type="number" min="0" name="noEvent" id="noEvent" required onchange="changed()">
       <br>
       <br>
-      <button type="submit">Submit</button>
-    </form>
-    <section></section>
+      <!-- <button type="submit">Submit</button>
+    </form> -->
   </body>
 
   <script lang="javascript">
@@ -53,8 +52,27 @@
 
     const eventTypes = ["Selected", "Births", "Deaths", "Holidays", "Others"];
 
+    const body = document.querySelector("body");
+
+    function changed(){
+      let checkDay = document.getElementById("day").value;
+      let checkMonth = document.getElementById("month").value;    
+      let checkSelection = document.getElementById("selection").value;
+      let checkNoEvent = document.getElementById("noEvent").value;
+
+      if(checkDay!=day || checkMonth!=month || checkSelection!=selection || checkNoEvent!=noEvent){
+        if(document.querySelector("section")) document.querySelector("section").remove();
+        const loader = document.createElement("div");
+        loader.setAttribute("id", "loader");
+        body.appendChild(loader);
+
+        day = checkDay; month = checkMonth; selection = checkSelection; noEvent = checkNoEvent;
+        pull();
+      }
+
+    }
+
     async function pull(){
-      if(!document.getElementById("form").checkValidity()) return;
       const request = "https://en.wikipedia.org/api/rest_v1/feed/onthisday/" + String(selection) + "/" + String(month).padStart(2,'0') + "/" + String(day).padStart(2,'0');
       // console.log(request);
       const response = await fetch(request);
@@ -67,10 +85,29 @@
     }
 
     function populateEvents(obj){
-      const section = document.querySelector("section");  
-      if(selection == "all"){        
-        for(let type of eventTypes){
-          const typeName = document.createElement("h2");
+      let section;
+      if(!document.getElementById(String(day)+String(month))){
+        section = document.createElement("section"); 
+        section.setAttribute("id", String(day)+String(month));
+        body.appendChild(section);
+      }
+      else return;      
+          
+      switch (selection.toLowerCase()) {
+        case "all":
+          for(let type of eventTypes) setData(type, section, obj);
+          break;        
+      
+        default:
+          setData(selection[0].toUpperCase()+selection.slice(1), section, obj);          
+          break;
+      }
+
+      if(document.getElementsByClassName("loader")) document.getElementById("loader").remove();
+    }
+
+    function setData(type, section, obj){
+      const typeName = document.createElement("h2");
           typeName.textContent = type;
           section.appendChild(typeName);
           
@@ -147,9 +184,6 @@
           }
 
           if(type == "events") type = "Others";
-
-        }      
-      }            
     }
 
   </script>
