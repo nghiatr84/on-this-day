@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/styles.css">
+  </head>
+  <body>
+    <h1>Wikipedia On This Day API</h1>
+    <h2>Pulling interesting events happened on this day and month but in different years ago.</h2>
+    <br>
+    <form onsubmit="pull(); return false;" id="form">
+      <label for="month">Input month (as a number from 1 to 12): </label>
+      <input type="number" min="1" max="12" name="month" id="month" required>
+      <br>
+      <label for="day">Input day: </label>
+      <input type="number" min="1" max="31" name="day" id="day" required>
+      <br>
+      <br>
+      <p>Provides events that historically happened on the provided day and month. Supported types of events are:</p>
+      <ul>
+        <li>All: all of the following</li>
+        <li>Selected: a list of a few selected anniversaries which occur on the provided day and month; often the entries are curated for the current year</li>
+        <li>Births: a list of birthdays which happened on the provided day and month</li>
+        <li>Deaths: a list of deaths which happened on the provided day and month</li>
+        <li>Holidays: a list of fixed holidays celebrated on the provided day and month</li>
+        <li>Other: a list of significant events which happened on the provided day and month and which are not covered by the other types yet</li>
+      </ul>
+      <label for="dropdown">Filter: </label>
+      <select name="" id="selection">
+        <option value="all">All</option>
+        <option value="selected">Selected</option>
+        <option value="births">Births</option>
+        <option value="deaths">Deaths</option>
+        <option value="holidays">Holidays</option>
+        <option value="others">Others</option>
+      </select>
+      <br>
+      <label for="noEvent">Desired number of event(s) to show:</label>
+      <input type="number" min="0" name="noEvent" id="noEvent" required>
+      <br>
+      <br>
+      <button type="submit">Submit</button>
+    </form>
+    <section></section>
+  </body>
+
+  <script lang="javascript">
+    let day = document.getElementById("day").value;    
+    let month = document.getElementById("month").value;    
+    let selection = document.getElementById("selection").value;
+    let noEvent = document.getElementById("noEvent").value;
+
+    const eventTypes = ["Selected", "Births", "Deaths", "Holidays", "Others"];
+
+    async function pull(){
+      if(!document.getElementById("form").checkValidity()) return;
+      const request = "https://en.wikipedia.org/api/rest_v1/feed/onthisday/" + String(selection) + "/" + String(month).padStart(2,'0') + "/" + String(day).padStart(2,'0');
+      // console.log(request);
+      const response = await fetch(request);
+      const events = await response.json();
+      console.log(events);
+
+      populateEvents(events);
+
+      console.log("pull() Done.")
+    }
+
+    function populateEvents(obj){
+      const section = document.querySelector("section");  
+      if(selection == "all"){        
+        for(let type of eventTypes){
+          const typeName = document.createElement("h2");
+          typeName.textContent = type;
+          section.appendChild(typeName);
+          
+          if(type === "Others") type = "events";
+
+          const ul = document.createElement("ul");
+          ul.setAttribute("id", type);
+          section.appendChild(ul);
+
+          for(let i = 0; i < noEvent && i < obj[type.toLowerCase()].length; i++){
+            
+            const event = obj[type.toLowerCase()][i];
+            const eventName = document.createElement("li");            
+            eventName.textContent = event.text;
+            ul.appendChild(eventName);        
+
+            let year = event.year;
+            if(!year) year = "Annually."
+            
+            const date = document.createElement("p");
+            date.textContent = "Date: ";
+
+            const dateString = document.createElement("span");
+            
+            if(year == "Annually."){
+              switch (month) {
+                case "1":
+                  dateString.textContent = "Jan " + String(day) + " annually";
+                  break;
+                case "2":
+                  dateString.textContent = "Feb " + String(day) + " annually";
+                  break;
+                case "3":
+                  dateString.textContent = "Mar " + String(day) + " annually";
+                  break;
+                case "4":
+                  dateString.textContent = "Apr " + String(day) + " annually";
+                  break;
+                case "5":
+                  dateString.textContent = "May " + String(day) + " annually";
+                  break;
+                case "6":
+                  dateString.textContent = "Jun " + String(day) + " annually";
+                  break;
+                case "7":
+                  dateString.textContent = "Jul " + String(day) + " annually";
+                  break;
+                case "8":
+                  dateString.textContent = "Aug"  + String(day) + " annually";
+                  break;
+                case "9":
+                  dateString.textContent = "Sep " + String(day) + " annually";
+                  break;
+                case "10":
+                  dateString.textContent = "Oct " + String(day) + " annually";
+                  break;
+                case "11":
+                  dateString.textContent = "Nov " + String(day) + " annually";
+                  break;
+                case "12":
+                  dateString.textContent = "Dec"  + String(day) + " annually";
+                  break;
+              
+                default:
+                  dateString.textContent = "Cannot find date.";
+                  break;
+              }              
+            }
+            else dateString.textContent = new Date(year, month-1, day).toDateString();
+            date.appendChild(dateString);
+            
+            ul.appendChild(date);
+            
+          }
+
+          if(type == "events") type = "Others";
+
+        }      
+      }            
+    }
+
+  </script>
+</html>
