@@ -7,46 +7,49 @@
   </head>
   <body>
     <h1>Wikipedia On This Day API</h1>
-    <h2>Pulling interesting events happened on this day and month but in different years.</h2>
+    <h2>Pulling interesting events happened on this day and month but in different years.</h2>        
+    <p>Provides events that historically happened on the provided day and month. Supported types of events are:</p>
+    <ul>
+      <li>All: all of the following</li>
+      <li>Selected: a list of a few selected anniversaries which occur on the provided day and month; often the entries are curated for the current year</li>
+      <li>Births: a list of birthdays which happened on the provided day and month</li>
+      <li>Deaths: a list of deaths which happened on the provided day and month</li>
+      <li>Holidays: a list of fixed holidays celebrated on the provided day and month</li>
+      <li>Others: a list of significant events which happened on the provided day and month and which are not covered by the other types yet</li>
+    </ul>    
+    <label for="dropdown">Filter: </label>
+    <select name="" id="selection" onchange="changed()">
+      <option value="all">All</option>
+      <option value="selected">Selected</option>
+      <option value="births">Births</option>
+      <option value="deaths">Deaths</option>
+      <option value="holidays">Holidays</option>
+      <option value="others">Others</option>
+    </select>
+
     <br>
-    <!-- <form onsubmit="changed(); return false;" id="form"> -->
-      <label for="month">Input month (as a number from 1 to 12): </label>
-      <input type="number" min="1" max="12" name="month" id="month" required onchange="changed()">
-      <br>
-      <label for="day">Input day: </label>
-      <input type="number" min="1" max="31" name="day" id="day" required onchange="changed()">
-      <br>
-      <br>
-      <p>Provides events that historically happened on the provided day and month. Supported types of events are:</p>
-      <ul>
-        <li>All: all of the following</li>
-        <li>Selected: a list of a few selected anniversaries which occur on the provided day and month; often the entries are curated for the current year</li>
-        <li>Births: a list of birthdays which happened on the provided day and month</li>
-        <li>Deaths: a list of deaths which happened on the provided day and month</li>
-        <li>Holidays: a list of fixed holidays celebrated on the provided day and month</li>
-        <li>Others: a list of significant events which happened on the provided day and month and which are not covered by the other types yet</li>
-      </ul>
-      <label for="dropdown">Filter: </label>
-      <select name="" id="selection" onchange="changed()">
-        <option value="all">All</option>
-        <option value="selected">Selected</option>
-        <option value="births">Births</option>
-        <option value="deaths">Deaths</option>
-        <option value="holidays">Holidays</option>
-        <option value="others">Others</option>
-      </select>
-      <br>
-      <label for="noEvent">Desired number of event(s) to show:</label>
-      <input type="number" min="1" name="noEvent" id="noEvent" required onchange="changed()">
-      <br>
-      <br>
-      <!-- <button type="submit">Submit</button>
-    </form> -->
+    <br>
+
+    <label for="date">Input date: </label>
+    <input type="date" name="date" id="date" required onchange="changed()">   
+    
+    <br>
+    <br> 
+
+    <label for="noEvent">Desired number of event(s) to show:</label>
+    <input type="number" min="1" name="noEvent" id="noEvent" required onchange="changed()">
+    
+    <br>
+    <br>      
+    
   </body>
 
   <script lang="javascript">
-    let day = document.getElementById("day").value;    
-    let month = document.getElementById("month").value;    
+    let date = document.getElementById("date").value;            
+    function month() {return date.split("-")[1];}
+    function day() {return date.split("-")[2];}
+
+
     let selection = document.getElementById("selection").value;
     let noEvent = document.getElementById("noEvent").value;
 
@@ -57,12 +60,13 @@
     const body = document.querySelector("body");
 
     function changed(){
-      let checkDay = document.getElementById("day").value;
-      let checkMonth = document.getElementById("month").value;    
-      let checkSelection = document.getElementById("selection").value;
-      let checkNoEvent = document.getElementById("noEvent").value;
+      const checkDate = document.getElementById("date").value;              
+      const checkMonth = date.split("-")[1];
+      const checkDay = date.split("-")[2];
+      const checkSelection = document.getElementById("selection").value;
+      const checkNoEvent = document.getElementById("noEvent").value;
 
-      if(!checkDay || !checkMonth || !checkSelection || !checkNoEvent){
+      if(checkDate=="" || !checkSelection || !checkNoEvent){
         if(!document.getElementById("noteText")){
           const noteText = document.createElement("h4");
           noteText.setAttribute("id", "noteText");
@@ -71,9 +75,10 @@
         }
         return;
       }
+
       else if(document.getElementById("noteText")) document.getElementById("noteText").remove();
 
-      if(checkDay!=day || checkMonth!=month || checkSelection!=selection || checkNoEvent!=noEvent){
+      if(checkDate!=date || checkSelection!=selection || checkNoEvent!=noEvent){
         if(document.querySelector("section")) document.querySelector("section").remove();
         if(!document.getElementById("loader")){
           const loader = document.createElement("div");
@@ -82,31 +87,27 @@
         }
 
         if(!response){
-          day = checkDay; month = checkMonth; selection = checkSelection; noEvent = checkNoEvent;
+          date = checkDate; selection = checkSelection; noEvent = checkNoEvent;
           response = pull();
         }
         else if(checkNoEvent==noEvent){
-          day = checkDay; month = checkMonth; selection = checkSelection; 
+          date = checkDate; selection = checkSelection; 
           response = pull();
         }
         else{          
-          noEvent = checkNoEvent;
-          // populateEvents(response);          
+          noEvent = checkNoEvent;                    
           response = pull();
         }
       }
     }
 
     async function pull(){
-      const request = "https://en.wikipedia.org/api/rest_v1/feed/onthisday/" + String(selection) + "/" + String(month).padStart(2,'0') + "/" + String(day).padStart(2,'0');
-      // console.log(request);
+      const request = "https://en.wikipedia.org/api/rest_v1/feed/onthisday/" + String(selection) + "/" + month() + "/" + day();      
       const response = await fetch(request);
       const events = await response.json();      
-      console.log("pull() Done.");
-      // return response.json().then((events) => {        
-        console.log(events);
-        populateEvents(events);
-      // });      
+      console.log("pull() Done.");      
+      console.log(events);
+      populateEvents(events);      
     }
 
     function populateEvents(obj){
@@ -140,8 +141,7 @@
 
           const ul = document.createElement("ul");
           ul.setAttribute("id", type);
-          section.appendChild(ul);
-          // console.log(obj);
+          section.appendChild(ul);          
 
           for(let i = 0; i < noEvent && i < obj[type.toLowerCase()].length; i++){
             
@@ -153,48 +153,48 @@
             let year = event.year;
             if(!year) year = "Annually."
             
-            const date = document.createElement("p");
-            date.textContent = "Date: ";
+            const eventDate = document.createElement("p");
+            eventDate.textContent = "Date: ";
 
             const dateString = document.createElement("span");
             
             if(year == "Annually."){
-              switch (month) {
-                case "1":
-                  dateString.textContent = "Jan " + String(day).padStart(2,'0') + " annually";
+              switch (month()) {
+                case "01":
+                  dateString.textContent = "Jan " + day() + " annually";
                   break;
-                case "2":
-                  dateString.textContent = "Feb " + String(day).padStart(2,'0') + " annually";
+                case "02":
+                  dateString.textContent = "Feb " + day() + " annually";
                   break;
-                case "3":
-                  dateString.textContent = "Mar " + String(day).padStart(2,'0') + " annually";
+                case "03":
+                  dateString.textContent = "Mar " + day() + " annually";
                   break;
-                case "4":
-                  dateString.textContent = "Apr " + String(day).padStart(2,'0') + " annually";
+                case "04":
+                  dateString.textContent = "Apr " + day() + " annually";
                   break;
-                case "5":
-                  dateString.textContent = "May " + String(day).padStart(2,'0') + " annually";
+                case "05":
+                  dateString.textContent = "May " + day() + " annually";
                   break;
-                case "6":
-                  dateString.textContent = "Jun " + String(day).padStart(2,'0') + " annually";
+                case "06":
+                  dateString.textContent = "Jun " + day() + " annually";
                   break;
-                case "7":
-                  dateString.textContent = "Jul " + String(day).padStart(2,'0') + " annually";
+                case "07":
+                  dateString.textContent = "Jul " + day() + " annually";
                   break;
-                case "8":
-                  dateString.textContent = "Aug "  + String(day).padStart(2,'0') + " annually";
+                case "08":
+                  dateString.textContent = "Aug "  + day() + " annually";
                   break;
-                case "9":
-                  dateString.textContent = "Sep " + String(day).padStart(2,'0') + " annually";
+                case "09":
+                  dateString.textContent = "Sep " + day() + " annually";
                   break;
                 case "10":
-                  dateString.textContent = "Oct " + String(day).padStart(2,'0') + " annually";
+                  dateString.textContent = "Oct " + day() + " annually";
                   break;
                 case "11":
-                  dateString.textContent = "Nov " + String(day).padStart(2,'0') + " annually";
+                  dateString.textContent = "Nov " + day() + " annually";
                   break;
                 case "12":
-                  dateString.textContent = "Dec "  + String(day).padStart(2,'0') + " annually";
+                  dateString.textContent = "Dec "  + day() + " annually";
                   break;
               
                 default:
@@ -202,10 +202,16 @@
                   break;
               }              
             }
-            else dateString.textContent = new Date(year, month-1, day).toDateString();
-            date.appendChild(dateString);
+            else dateString.textContent = new Date(year, parseInt(month())-1, day()).toDateString();
+            eventDate.appendChild(dateString);
             
-            ul.appendChild(date);
+            ul.appendChild(eventDate);
+
+            const link = document.createElement("a");
+            link.textContent = "More detail\n";
+            link.setAttribute("href", event.pages[0].content_urls.desktop.page);
+            ul.appendChild(link);   
+            ul.appendChild(document.createElement("p"));
             
           }
 
