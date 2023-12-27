@@ -3,45 +3,48 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/paper.css">
     <link rel="stylesheet" href="../static/styles.css">
   </head>
   <body>
-    <h1>Wikipedia On This Day API</h1>
-    <h2>Pulling interesting events happened on this day and month but in different years.</h2>        
-    <p>Provides events that historically happened on the provided day and month. Supported types of events are:</p>
-    <ul>
-      <li>All: all of the following</li>
-      <li>Selected: a list of a few selected anniversaries which occur on the provided day and month; often the entries are curated for the current year</li>
-      <li>Births: a list of birthdays which happened on the provided day and month</li>
-      <li>Deaths: a list of deaths which happened on the provided day and month</li>
-      <li>Holidays: a list of fixed holidays celebrated on the provided day and month</li>
-      <li>Others: a list of significant events which happened on the provided day and month and which are not covered by the other types yet</li>
-    </ul>    
-    <label for="dropdown">Filter: </label>
-    <select name="" id="selection" onchange="changed()">
-      <option value="all">All</option>
-      <option value="selected">Selected</option>
-      <option value="births">Births</option>
-      <option value="deaths">Deaths</option>
-      <option value="holidays">Holidays</option>
-      <option value="others">Others</option>
-    </select>
+    <header>
+      <h1 class="centered">Wikipedia On This Day API</h1>
+      <h3 class="centered">Pulling interesting events happened on this day and month but in different years.</h3>        
+      <p>Provides events that historically happened on the provided day and month. Supported types of events are:</p>
+      <ul>
+        <li>All: all of the following</li>
+        <li>Selected: a list of a few selected anniversaries which occur on the provided day and month; often the entries are curated for the current year</li>
+        <li>Births: a list of birthdays which happened on the provided day and month</li>
+        <li>Deaths: a list of deaths which happened on the provided day and month</li>
+        <li>Holidays: a list of fixed holidays celebrated on the provided day and month</li>
+        <li>Others: a list of significant events which happened on the provided day and month and which are not covered by the other types yet</li>
+      </ul>    
+      <div id="filter">
+        <label for="dropdown">Filter: </label>
+      <select name="" id="selection" onchange="changed()">
+        <option value="all">All</option>
+        <option value="selected">Selected</option>
+        <option value="births">Births</option>
+        <option value="deaths">Deaths</option>
+        <option value="holidays">Holidays</option>
+        <option value="others">Others</option>
+      </select>
+  
+      <br>
+      <br>      
+  
+      <label for="date">Input date: </label>
+      <input type="date" name="date" id="date" required onchange="changed()">   
+      
+      <br>
+      <br> 
+  
+      <label for="noEvent">Desired number of event(s) to show:</label>
+      <input type="number" min="1" name="noEvent" id="noEvent" required onchange="changed()">         
+      </div>      
+    </header>
 
-    <br>
-    <br>
-
-    <label for="date">Input date: </label>
-    <input type="date" name="date" id="date" required onchange="changed()">   
-    
-    <br>
-    <br> 
-
-    <label for="noEvent">Desired number of event(s) to show:</label>
-    <input type="number" min="1" name="noEvent" id="noEvent" required onchange="changed()">
-    
-    <br>
-    <br>      
-    
+    <div id="js"></div>
   </body>
 
   <script lang="javascript">
@@ -57,7 +60,7 @@
 
     const eventTypes = ["Selected", "Births", "Deaths", "Holidays", "Others"];
 
-    const body = document.querySelector("body");
+    const js = document.getElementById("js");
 
     function changed(){
       const checkDate = document.getElementById("date").value;              
@@ -70,8 +73,9 @@
         if(!document.getElementById("noteText")){
           const noteText = document.createElement("h4");
           noteText.setAttribute("id", "noteText");
+          noteText.setAttribute("style", "text-decoration: overline underline wavy lightblue 2px;");
           noteText.textContent = "Enter all fields to start searching :)";
-          body.appendChild(noteText);
+          js.appendChild(noteText);
         }
         return;
       }
@@ -83,7 +87,7 @@
         if(!document.getElementById("loader")){
           const loader = document.createElement("div");
           loader.setAttribute("id", "loader");
-          body.appendChild(loader);
+          js.appendChild(loader);
         }
 
         if(!response){
@@ -115,7 +119,7 @@
       if(!document.getElementById(String(day)+String(month))){
         section = document.createElement("section"); 
         section.setAttribute("id", String(day)+String(month));
-        body.appendChild(section);
+        js.appendChild(section);
       }
       else return;      
           
@@ -133,7 +137,7 @@
     }
 
     function setData(type, section, obj){
-      const typeName = document.createElement("h2");
+      const typeName = document.createElement("h4");
           typeName.textContent = type;
           section.appendChild(typeName);
           
@@ -208,6 +212,7 @@
             ul.appendChild(eventDate);
 
             const link = document.createElement("a");
+            link.setAttribute("target", "_blank");
             link.textContent = "More detail\n";
             link.setAttribute("href", event.pages[0].content_urls.desktop.page);
             ul.appendChild(link);   
