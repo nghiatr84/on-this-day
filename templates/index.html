@@ -87,35 +87,16 @@
       }
       else if(document.getElementById("noteText")) document.getElementById("noteText").remove();         
 
-      // if(checkDate!=date || checkSelection!=selection || checkNoEvent!=noEvent || yearCheckboxChanged) 
-      // {      
         if(document.querySelector("section")) document.querySelector("section").remove();
         if(!document.getElementById("loader")){
           const loader = document.createElement("div");
           loader.setAttribute("id", "loader");
           js.appendChild(loader);
         }
-
-        // if(!response){
-          date = checkDate; selection = checkSelection; noEvent = checkNoEvent; yearCheckboxChanged = false;
-          response = pull();
-        // }
-        // else if(checkNoEvent==noEvent){
-        //   date = checkDate; selection = checkSelection; 
-        //   response = pull();
-        // }        
-        // else if(checkNoEvent != noEvent){          
-        //   noEvent = checkNoEvent;                    
-        //   response = pull();      
-        // }
-        // else if(yearCheckboxChanged){
-        //   yearCheckboxChanged = false;
-        //   response = pull()
-        // }
-        // else{
-        //   console.log("changed() called. Reason: Unknown.");
-        // }
-      // }
+        
+        date = checkDate; selection = checkSelection; noEvent = checkNoEvent; yearCheckboxChanged = false;
+        response = pull();
+   
       console.log("changed() done.");
     }
 
