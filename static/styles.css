@@ -54,6 +54,10 @@ h1{
     text-decoration-skip-ink: none;
 }
 
+a{
+    background-image: none !important;
+}
+
 a:hover{    
     text-decoration: underline wavy lightblue 2px !important;
 }

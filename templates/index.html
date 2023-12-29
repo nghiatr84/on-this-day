@@ -48,7 +48,7 @@
     <div id="js"></div>
   </body>
 
-  <script lang="javascript">
+  <script lang="javascript">    
     let date = document.getElementById("date").value;   
     let selection = document.getElementById("selection").value;
     let noEvent = document.getElementById("noEvent").value;
@@ -87,8 +87,8 @@
       }
       else if(document.getElementById("noteText")) document.getElementById("noteText").remove();         
 
-      if(checkDate!=date || checkSelection!=selection || checkNoEvent!=noEvent || yearCheckboxChanged) 
-      {      
+      // if(checkDate!=date || checkSelection!=selection || checkNoEvent!=noEvent || yearCheckboxChanged) 
+      // {      
         if(document.querySelector("section")) document.querySelector("section").remove();
         if(!document.getElementById("loader")){
           const loader = document.createElement("div");
@@ -96,26 +96,26 @@
           js.appendChild(loader);
         }
 
-        if(!response){
-          date = checkDate; selection = checkSelection; noEvent = checkNoEvent;
+        // if(!response){
+          date = checkDate; selection = checkSelection; noEvent = checkNoEvent; yearCheckboxChanged = false;
           response = pull();
-        }
-        else if(checkNoEvent==noEvent){
-          date = checkDate; selection = checkSelection; 
-          response = pull();
-        }        
-        else if(checkNoEvent != noEvent){          
-          noEvent = checkNoEvent;                    
-          response = pull();      
-        }
-        else if(yearCheckboxChanged){
-          yearCheckboxChanged = false;
-          response = pull()
-        }
-        else{
-          console.log("changed() called. Reason: Unknown.");
-        }
-      }
+        // }
+        // else if(checkNoEvent==noEvent){
+        //   date = checkDate; selection = checkSelection; 
+        //   response = pull();
+        // }        
+        // else if(checkNoEvent != noEvent){          
+        //   noEvent = checkNoEvent;                    
+        //   response = pull();      
+        // }
+        // else if(yearCheckboxChanged){
+        //   yearCheckboxChanged = false;
+        //   response = pull()
+        // }
+        // else{
+        //   console.log("changed() called. Reason: Unknown.");
+        // }
+      // }
       console.log("changed() done.");
     }
 
@@ -148,19 +148,20 @@
       }
 
       if(document.getElementsByClassName("loader") != null) document.getElementById("loader").remove();
-    }
+    }    
 
     function setData(type, section, obj){
       const typeName = document.createElement("h4");
           typeName.textContent = type;
-          section.appendChild(typeName);
+          section.appendChild(typeName);          
           
           if(type === "Others") type = "events";
 
           const ul = document.createElement("ul");
           ul.setAttribute("id", type);
-          section.appendChild(ul);          
+          section.appendChild(ul);                    
 
+          let eventCounter = 0;
           for(let i = 0; i < noEvent && i < obj[type.toLowerCase()].length; i++){
             
             const event = obj[type.toLowerCase()][i];
@@ -236,10 +237,19 @@
             ul.appendChild(link);   
             ul.appendChild(document.createElement("p"));
             
+            eventCounter++;
+          }
+
+          if(eventCounter == 0){
+            const text = document.createElement("p");
+            text.setAttribute("class", "centered");
+            text.textContent = "No event can be pulled in this category :(";
+            section.appendChild(text); 
           }
 
           if(type == "events") type = "Others";
     }
 
+    changed();
   </script>
 </html>
