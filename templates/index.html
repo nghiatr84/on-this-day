@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/paper.css">
     <link rel="stylesheet" href="../static/styles.css">
+    <title>Wikipedia On This Day API</title>
   </head>
   <body>
     <header>
@@ -30,15 +31,15 @@
         <option value="others">Others</option>
       </select>
   
-      <br>
-      <br>      
-  
       <label for="date">Input date: </label>
       <input type="date" name="date" id="date" required onchange="changed()">   
+
+      <label id="yearLabel" for="year">
+        Include year?
+        <input type="checkbox" name="year" id="year">
+        <span class="checkmark"></span>           
+      </label>                  
       
-      <br>
-      <br> 
-  
       <label for="noEvent">Desired number of event(s) to show:</label>
       <input type="number" min="1" name="noEvent" id="noEvent" required onchange="changed()">         
       </div>      
@@ -48,19 +49,24 @@
   </body>
 
   <script lang="javascript">
-    let date = document.getElementById("date").value;            
-    function month() {return date.split("-")[1];}
-    function day() {return date.split("-")[2];}
-
-
+    let date = document.getElementById("date").value;   
     let selection = document.getElementById("selection").value;
     let noEvent = document.getElementById("noEvent").value;
-
     let response;
-
     const eventTypes = ["Selected", "Births", "Deaths", "Holidays", "Others"];
-
     const js = document.getElementById("js");
+    const yearCheckbox = document.getElementById("year");
+    
+    function month() {return date.split("-")[1];}
+    function day() {return date.split("-")[2];}
+    function choosenYear() {return date.split("-")[0];}        
+    function includeYear() {return yearCheckbox.checked;}     
+
+    let yearCheckboxChanged = false;
+    yearCheckbox.addEventListener("change", () => {
+      yearCheckboxChanged = true;
+      changed();
+    });    
 
     function changed(){
       const checkDate = document.getElementById("date").value;              
@@ -79,10 +85,10 @@
         }
         return;
       }
+      else if(document.getElementById("noteText")) document.getElementById("noteText").remove();         
 
-      else if(document.getElementById("noteText")) document.getElementById("noteText").remove();
-
-      if(checkDate!=date || checkSelection!=selection || checkNoEvent!=noEvent){
+      if(checkDate!=date || checkSelection!=selection || checkNoEvent!=noEvent || yearCheckboxChanged) 
+      {      
         if(document.querySelector("section")) document.querySelector("section").remove();
         if(!document.getElementById("loader")){
           const loader = document.createElement("div");
@@ -97,12 +103,20 @@
         else if(checkNoEvent==noEvent){
           date = checkDate; selection = checkSelection; 
           response = pull();
-        }
-        else{          
+        }        
+        else if(checkNoEvent != noEvent){          
           noEvent = checkNoEvent;                    
-          response = pull();
+          response = pull();      
+        }
+        else if(yearCheckboxChanged){
+          yearCheckboxChanged = false;
+          response = pull()
+        }
+        else{
+          console.log("changed() called. Reason: Unknown.");
         }
       }
+      console.log("changed() done.");
     }
 
     async function pull(){
@@ -112,13 +126,13 @@
       console.log("pull() Done.");      
       console.log(events);
       populateEvents(events);      
-    }
+    }    
 
     function populateEvents(obj){
       let section;
-      if(!document.getElementById(String(day)+String(month))){
+      if(!document.getElementById(String(day)+String(month)+String(includeYear()))){
         section = document.createElement("section"); 
-        section.setAttribute("id", String(day)+String(month));
+        section.setAttribute("id", String(day)+String(month)+String(includeYear()));
         js.appendChild(section);
       }
       else return;      
@@ -133,7 +147,7 @@
           break;
       }
 
-      if(document.getElementsByClassName("loader")) document.getElementById("loader").remove();
+      if(document.getElementsByClassName("loader") != null) document.getElementById("loader").remove();
     }
 
     function setData(type, section, obj){
@@ -150,19 +164,23 @@
           for(let i = 0; i < noEvent && i < obj[type.toLowerCase()].length; i++){
             
             const event = obj[type.toLowerCase()][i];
+            let year = event.year;
+            
+            if(!year) year = "annually";
+
+            if(year!="annually" && includeYear() && year!=choosenYear()) 
+              continue;            
+
             const eventName = document.createElement("li");            
             eventName.textContent = event.text;
-            ul.appendChild(eventName);        
-
-            let year = event.year;
-            if(!year) year = "Annually."
+            ul.appendChild(eventName);                    
             
             const eventDate = document.createElement("p");
             eventDate.textContent = "Date: ";
 
             const dateString = document.createElement("span");
             
-            if(year == "Annually."){
+            if(year == "annually"){
               switch (month()) {
                 case "01":
                   dateString.textContent = "Jan " + day() + " annually";
