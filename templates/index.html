@@ -21,27 +21,30 @@
         <li>Others: a list of significant events which happened on the provided day and month and which are not covered by the other types yet</li>
       </ul>    
       <div id="filter">
-        <label for="dropdown">Filter: </label>
-      <select name="" id="selection" onchange="changed()">
-        <option value="all">All</option>
-        <option value="selected">Selected</option>
-        <option value="births">Births</option>
-        <option value="deaths">Deaths</option>
-        <option value="holidays">Holidays</option>
-        <option value="others">Others</option>
-      </select>
+        <label for="dropdown">Filter: 
+          <select name="" id="selection" onchange="changed()">
+            <option value="all">All</option>
+            <option value="selected">Selected</option>
+            <option value="births">Births</option>
+            <option value="deaths">Deaths</option>
+            <option value="holidays">Holidays</option>
+            <option value="others">Others</option>
+          </select>
+        </label>      
   
-      <label for="date">Input date: </label>
-      <input type="date" name="date" id="date" required onchange="changed()">   
+        <label for="date">Input date: 
+          <input type="date" name="date" id="date" required onchange="changed()">  
+        </label>       
 
-      <label id="yearLabel" for="year">
-        Include year?
-        <input type="checkbox" name="year" id="year">
-        <span class="checkmark"></span>           
-      </label>                  
-      
-      <label for="noEvent">Desired number of event(s) to show:</label>
-      <input type="number" min="1" name="noEvent" id="noEvent" required onchange="changed()">         
+        <label id="yearLabel" for="year">
+          Include year?
+          <input type="checkbox" name="year" id="year">
+          <span class="checkmark"></span>           
+        </label>                  
+        
+        <label for="noEvent">Desired number of event(s) to show: 
+          <input type="number" min="1" name="noEvent" id="noEvent" required onchange="changed()"> 
+        </label>              
       </div>      
     </header>
 
