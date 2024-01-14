@@ -1,4 +1,4 @@
-#Wikipedia OnThisDay API Integration
+# Wikipedia OnThisDay API Integration
 
 This is a website which ultilises the Wikipedia OnThisDay API to pull events in categories when provided with date. 
 
@@ -9,9 +9,9 @@ Various additional functions on filtering the events are incorporated, including
 
 More functions are on the way when ideas strike. Feel free to leave any suggestion :)
 
-##Screenshots 
+## Screenshots 
 
-###1. Introduction & Filter
+### 1. Introduction & Filter
 ![image](https://github.com/nghiatr84/on-this-day/assets/132190213/c4cb2b40-94d6-4e71-a83c-7c2cbf9a8243)
 
 Jan. 14th, 2024 - Desktop
@@ -21,7 +21,7 @@ Jan. 14th, 2024 - Desktop
 
 Jan. 14th, 2024 - Mobile
 
-###2. Events
+### 2. Events
 ![image](https://github.com/nghiatr84/on-this-day/assets/132190213/81a05379-a938-492a-902a-2fe7f71c690f)
 
 Jan. 14th, 2024 - Desktop
