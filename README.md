@@ -17,10 +17,9 @@ UPDATE OCT. 3rd, 2024: NOW WITH LIGHT MODE AND CLEAN(ER) UI!
 ![image](https://github.com/user-attachments/assets/6171468e-b729-434c-a201-c9747480c812)
 Oct. 3rd, 2024 - Desktop
 
-![image](https://github.com/nghiatr84/on-this-day/assets/132190213/38e70721-8e31-4066-8097-d226b7637dd8)
-![image](https://github.com/nghiatr84/on-this-day/assets/132190213/31a602f7-622c-45ef-a69e-71990522bae9)
+![image](https://github.com/user-attachments/assets/77933413-0d1b-48a3-b328-4e88aa26a802)
 
-Jan. 14th, 2024 - Mobile
+Oct. 3rd, 2024 - Mobile
 
 ### 2. Events
 ![image](https://github.com/user-attachments/assets/6dcfc985-ff24-4320-a07e-42397df5cde3)
