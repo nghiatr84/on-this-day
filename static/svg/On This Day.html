@@ -1,47 +1,39 @@
 <!DOCTYPE html>
-<html id="html" lang="en" class="dark">
-
-<head>
+<html id="html" lang="en" class="dark"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../static/paper.css">
-  <link rel="stylesheet" href="../static/styles.css">
-  <link rel="icon" type="image/x-icon" href="../static/svg/chat-bubble-balloon-svgrepo-com.svg">
-  <title>On This Day</title>
+  <link rel="stylesheet" href="On%20This%20Day_files/paper.css">
+  <link rel="stylesheet" href="On%20This%20Day_files/styles.css">
+  <link rel="icon" type="image/x-icon" href="http://127.0.0.1:5000/static/svg/chat-bubble-balloon-svgrepo-com.svg">
+  <title>On This Day</title>  
 </head>
 
-<body>
+<body>  
   <header>
     <div id="dark-mode-toggler">
       <a onclick="toggleDarkMode()" id="dark-mode-toggle-btn">
-        <svg width="20px" height="20px" viewBox="0 0 400 400" id="Night" version="1.1" xml:space="preserve"
-          xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <svg width="20px" height="20px" viewBox="0 0 400 400" id="Night" version="1.1" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
           <g id="XMLID_42_">
-            <polygon id="XMLID_44_" points="133.3,53.3 133.3,26.7 106.7,26.7 80,26.7 80,53.3 106.7,53.3  " />
-            <polygon id="XMLID_64_"
-              points="160,53.3 186.7,53.3 186.7,26.7 213.3,26.7 213.3,0 186.7,0 160,0 133.3,0 133.3,26.7 160,26.7     " />
-            <rect height="26.7" id="XMLID_65_" width="26.7" x="53.3" y="53.3" />
-            <rect height="26.7" id="XMLID_66_" width="26.7" x="133.3" y="53.3" />
-            <polygon id="XMLID_90_"
-              points="106.7,106.7 106.7,133.3 106.7,160 106.7,186.7 106.7,213.3 133.3,213.3 133.3,186.7 133.3,160    133.3,133.3 133.3,106.7 133.3,80 106.7,80  " />
-            <polygon id="XMLID_91_" points="53.3,106.7 53.3,80 26.7,80 26.7,106.7 26.7,133.3 53.3,133.3  " />
-            <polygon id="XMLID_92_"
-              points="373.3,186.7 373.3,213.3 346.7,213.3 346.7,240 373.3,240 373.3,266.7 400,266.7 400,240    400,213.3 400,186.7  " />
-            <polygon id="XMLID_93_"
-              points="26.7,213.3 26.7,186.7 26.7,160 26.7,133.3 0,133.3 0,160 0,186.7 0,213.3 0,240 0,266.7    26.7,266.7 26.7,240  " />
-            <rect height="26.7" id="XMLID_94_" width="26.7" x="133.3" y="213.3" />
-            <rect height="26.7" id="XMLID_95_" width="26.7" x="160" y="240" />
-            <rect height="26.7" id="XMLID_96_" width="26.7" x="320" y="240" />
-            <polygon id="XMLID_97_" points="53.3,266.7 26.7,266.7 26.7,293.3 26.7,320 53.3,320 53.3,293.3  " />
-            <polygon id="XMLID_98_"
-              points="213.3,293.3 240,293.3 266.7,293.3 293.3,293.3 320,293.3 320,266.7 293.3,266.7 266.7,266.7    240,266.7 213.3,266.7 186.7,266.7 186.7,293.3  " />
-            <polygon id="XMLID_99_" points="346.7,293.3 346.7,320 373.3,320 373.3,293.3 373.3,266.7 346.7,266.7  " />
-            <rect height="26.7" id="XMLID_100_" width="26.7" x="53.3" y="320" />
-            <rect height="26.7" id="XMLID_101_" width="26.7" x="320" y="320" />
-            <polygon id="XMLID_102_" points="106.7,346.7 80,346.7 80,373.3 106.7,373.3 133.3,373.3 133.3,346.7  " />
-            <polygon id="XMLID_103_" points="266.7,346.7 266.7,373.3 293.3,373.3 320,373.3 320,346.7 293.3,346.7  " />
-            <polygon id="XMLID_104_"
-              points="213.3,373.3 186.7,373.3 160,373.3 133.3,373.3 133.3,400 160,400 186.7,400 213.3,400 240,400    266.7,400 266.7,373.3 240,373.3  " />
+            <polygon id="XMLID_44_" points="133.3,53.3 133.3,26.7 106.7,26.7 80,26.7 80,53.3 106.7,53.3  "></polygon>
+            <polygon id="XMLID_64_" points="160,53.3 186.7,53.3 186.7,26.7 213.3,26.7 213.3,0 186.7,0 160,0 133.3,0 133.3,26.7 160,26.7     "></polygon>
+            <rect height="26.7" id="XMLID_65_" width="26.7" x="53.3" y="53.3"></rect>
+            <rect height="26.7" id="XMLID_66_" width="26.7" x="133.3" y="53.3"></rect>
+            <polygon id="XMLID_90_" points="106.7,106.7 106.7,133.3 106.7,160 106.7,186.7 106.7,213.3 133.3,213.3 133.3,186.7 133.3,160    133.3,133.3 133.3,106.7 133.3,80 106.7,80  "></polygon>
+            <polygon id="XMLID_91_" points="53.3,106.7 53.3,80 26.7,80 26.7,106.7 26.7,133.3 53.3,133.3  "></polygon>
+            <polygon id="XMLID_92_" points="373.3,186.7 373.3,213.3 346.7,213.3 346.7,240 373.3,240 373.3,266.7 400,266.7 400,240    400,213.3 400,186.7  "></polygon>
+            <polygon id="XMLID_93_" points="26.7,213.3 26.7,186.7 26.7,160 26.7,133.3 0,133.3 0,160 0,186.7 0,213.3 0,240 0,266.7    26.7,266.7 26.7,240  "></polygon>
+            <rect height="26.7" id="XMLID_94_" width="26.7" x="133.3" y="213.3"></rect>
+            <rect height="26.7" id="XMLID_95_" width="26.7" x="160" y="240"></rect>
+            <rect height="26.7" id="XMLID_96_" width="26.7" x="320" y="240"></rect>
+            <polygon id="XMLID_97_" points="53.3,266.7 26.7,266.7 26.7,293.3 26.7,320 53.3,320 53.3,293.3  "></polygon>
+            <polygon id="XMLID_98_" points="213.3,293.3 240,293.3 266.7,293.3 293.3,293.3 320,293.3 320,266.7 293.3,266.7 266.7,266.7    240,266.7 213.3,266.7 186.7,266.7 186.7,293.3  "></polygon>
+            <polygon id="XMLID_99_" points="346.7,293.3 346.7,320 373.3,320 373.3,293.3 373.3,266.7 346.7,266.7  "></polygon>
+            <rect height="26.7" id="XMLID_100_" width="26.7" x="53.3" y="320"></rect>
+            <rect height="26.7" id="XMLID_101_" width="26.7" x="320" y="320"></rect>
+            <polygon id="XMLID_102_" points="106.7,346.7 80,346.7 80,373.3 106.7,373.3 133.3,373.3 133.3,346.7  "></polygon>
+            <polygon id="XMLID_103_" points="266.7,346.7 266.7,373.3 293.3,373.3 320,373.3 320,346.7 293.3,346.7  "></polygon>
+            <polygon id="XMLID_104_" points="213.3,373.3 186.7,373.3 160,373.3 133.3,373.3 133.3,400 160,400 186.7,400 213.3,400 240,400    266.7,400 266.7,373.3 240,373.3  "></polygon>
           </g>
         </svg>
       </a>
@@ -51,28 +43,26 @@
       <h1 id="head_title" class="text-center">On This Day</h1>
       <p class="text-center">Using Wikipedia API</p>
       <h3 class="text-center">Pulling interesting events happened on this day and month</h3>
-    </div>
+    </div>    
 
     <div class="center" id="description">
       <p>Provides events that historically happened on the provided day and month. Supported types of events are:</p>
       <ul>
         <li>All: all of the following</li>
-        <li>Selected: a list of a few selected anniversaries which occur on the provided day and month; often the
-          entries
+        <li>Selected: a list of a few selected anniversaries which occur on the provided day and month; often the entries
           are curated for the current year</li>
         <li>Births: a list of birthdays which happened on the provided day and month</li>
         <li>Deaths: a list of deaths which happened on the provided day and month</li>
         <li>Holidays: a list of fixed holidays celebrated on the provided day and month</li>
-        <li>Others: a list of significant events which happened on the provided day and month and which are not covered
-          by
+        <li>Others: a list of significant events which happened on the provided day and month and which are not covered by
           the other types yet</li>
       </ul>
     </div>
-
-    <div class="center" id="filter">
+    
+    <div class="text-center" id="filter">
       <label for="dropdown">Filter:
         <select id="selection">
-          <option value="all">All</option>
+          <option value="all" selected="selected">All</option>
           <option value="selected">Selected</option>
           <option value="births">Births</option>
           <option value="deaths">Deaths</option>
@@ -82,30 +72,25 @@
       </label>
 
       <label for="date">Input date:
-        <input type="date" name="date" id="date" required>
+        <input type="date" name="date" id="date" required="">
       </label>
 
       <label id="yearLabel" for="year">
         Include year?
         <input type="checkbox" name="year" id="year">
-        <span class="checkmark center"></span>
+        <span class="checkmark"></span>
       </label>
 
-      <label for="noEvent"># of event:
-        <input type="number" min="1" name="noEvent" id="noEvent" value="3" required>
+      <label for="noEvent">Desired number of event(s) to show:
+        <input type="number" min="1" name="noEvent" id="noEvent" required="">
       </label>
-      <label for="submit">
-        <button type="button" id="submit" onclick="changed()">Go!</button>
-      </label>
+      <button type="button" onclick="changed()">Go!</button>
     </div>
   </header>
 
-  <div class="center" id="js"></div>
-</body>
-<script>
-  const today = new Date();
-  document.getElementById("date").valueAsDate = today;    
-</script>
+  <div class="center" id="js"><h4 id="noteText" class="text-center">Enter all fields and press Go! to start searching :)</h4></div>
+
+
 <script lang="javascript">
   let date = document.getElementById("date").value;
   let selection = document.getElementById("selection").value;
@@ -121,10 +106,10 @@
   function includeYear() { return yearCheckbox.checked; }
 
   let yearCheckboxChanged = false;
-  // yearCheckbox.addEventListener("change", () => {
-  //   yearCheckboxChanged = true;
-  //   changed();
-  // });
+  yearCheckbox.addEventListener("change", () => {
+    yearCheckboxChanged = true;
+    changed();
+  });
 
   function changed() {
     const checkDate = document.getElementById("date").value;
@@ -196,9 +181,9 @@
 
     if (type === "Others") type = "events";
 
-    const ol = document.createElement("ol");
-    ol.setAttribute("id", type);
-    section.appendChild(ol);
+    const ul = document.createElement("ul");
+    ul.setAttribute("id", type);
+    section.appendChild(ul);
 
     let eventCounter = 0;
     for (let i = 0; i < noEvent && i < obj[type.toLowerCase()].length; i++) {
@@ -213,7 +198,7 @@
 
       const eventName = document.createElement("li");
       eventName.textContent = event.text;
-      ol.appendChild(eventName);
+      ul.appendChild(eventName);
 
       const eventDate = document.createElement("p");
       eventDate.textContent = "Date: ";
@@ -267,14 +252,14 @@
       else dateString.textContent = new Date(year, parseInt(month()) - 1, day()).toDateString();
       eventDate.appendChild(dateString);
 
-      ol.appendChild(eventDate);
+      ul.appendChild(eventDate);
 
       const link = document.createElement("a");
       link.setAttribute("target", "_blank");
       link.textContent = "More detail\n";
       link.setAttribute("href", event.pages[0].content_urls.desktop.page);
-      ol.appendChild(link);
-      ol.appendChild(document.createElement("p"));
+      ul.appendChild(link);
+      ul.appendChild(document.createElement("p"));
 
       eventCounter++;
     }
@@ -289,15 +274,15 @@
     if (type == "events") type = "Others";
   }
 
-  // changed();
+  changed();
 </script>
 <script>
-  function toggleDarkMode() {
+  function toggleDarkMode(){
     const html = document.getElementById("html");
-    if (html.classList.contains("dark"))
+    if(html.classList.contains("dark"))
       html.classList.remove("dark");
     else html.classList.add("dark")
   }
 </script>
 
-</html>
+</body></html>
